@@ -1,0 +1,21 @@
+Control time:
+<p></p>
+<button (click)="start()">Start</button>
+<button (click)="stop()">Stop</button>
+<span *ngIf="isRunning()">running...</span>
+<p></p>
+Set generation duration: <input [(ngModel)]="generationDuration">ms.
+<button (click)="stop(); start();">Reset</button>
+<p></p>
+
+<table>
+    <tr *ngFor="let gridRow of gridBox.elements" style="height: 23px">
+        <td 
+            *ngFor="let gridElement of gridRow"
+            style="width: 23px"
+            (click)="gridElement.isAlive = !gridElement.isAlive">
+            <div *ngIf="gridElement.isAlive" style="background: green">&nbsp;</div>
+            <div *ngIf="!gridElement.isAlive" style="background: grey" >&nbsp;</div>
+        </td>
+    </tr>
+</table>
