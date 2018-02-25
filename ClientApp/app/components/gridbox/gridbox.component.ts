@@ -7,13 +7,16 @@ import { GridBox } from './gridbox';
     styleUrls: ['./gridbox.component.css']
 })
 export class GridBoxComponent {
+    readonly defaultHeight = 15;
+    readonly defaultWidth = 20;
+
     private gridBox: GridBox;
 
     private generationDuration: number;
     private setIntervalNumber: number;
 
     constructor() {
-        this.initGridBox(15, 20);
+        this.initGridBox();
 
         this.generationDuration = 1000;
         this.setIntervalNumber = -1;
@@ -23,8 +26,8 @@ export class GridBoxComponent {
         return this.setIntervalNumber >= 0;
     }
 
-    initGridBox(height: number, width: number): void {
-        this.gridBox = new GridBox(height, width);
+    initGridBox(): void {
+        this.gridBox = new GridBox(this.defaultHeight, this.defaultWidth);
     }
 
     start(): void {
@@ -42,5 +45,15 @@ export class GridBoxComponent {
 
     runGeneration(): void {
         this.gridBox.goNext();
+    }
+
+    cellHeightWidth(): string {
+        if ((this.gridBox.height() < 18) && (this.gridBox.width() < 40)) {
+            return '20px';
+        } else if ((this.gridBox.height() > 32) || (this.gridBox.width() > 60)) {
+            return '5px';
+        } else {
+            return '10px';
+        }
     }
 }

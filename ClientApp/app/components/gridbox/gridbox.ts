@@ -91,11 +91,11 @@ export class GridBox {
         return aliveNeighbours;
     }
 
-    private height(): number {
+    height(): number {
         return this.elements.length;
     }
 
-    private width(): number {
+    width(): number {
         return this.elements[0].length;
     }
 }

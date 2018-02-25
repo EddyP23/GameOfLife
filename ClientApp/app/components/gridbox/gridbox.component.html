@@ -1,18 +1,28 @@
-<button (click)="start()" [disabled]="isRunning()">Start</button>
-<button (click)="stop()" [disabled]="!isRunning()">Stop</button>
-<span *ngIf="isRunning()">running...</span>
-<p></p>
-Set generation duration: <input [(ngModel)]="generationDuration">ms.
-<p></p>
+<h1>Conway's Game of Life</h1>
+<p>Set generation duration: <input [(ngModel)]="generationDuration">ms.</p>
+<button
+    (click)="start()"
+    [ngClass]="{'button--start': true, 'button--disabled': isRunning()}">
+    {{isRunning() ? 'running...' : 'Start'}}</button>
+<button
+    (click)="stop()"
+    [ngClass]="{'button--stop': true, 'button--disabled': !isRunning()}">Stop</button>
+
+<button 
+    (click)="stop(); initGridBox()"
+    class="button--reset">Reset Grid</button>
 
 <table>
-    <tr *ngFor="let gridRow of gridBox.elements" style="height: 23px">
+    <tr *ngFor="let gridRow of gridBox.elements">
         <td 
             *ngFor="let gridElement of gridRow"
-            style="width: 23px"
             (click)="gridElement.isAlive = !gridElement.isAlive">
-            <div *ngIf="gridElement.isAlive" style="background: rgb(69, 216, 69)">&nbsp;</div>
-            <div *ngIf="!gridElement.isAlive" style="background: rgb(202, 201, 201)" >&nbsp;</div>
+            <div [ngClass]="
+                            {'cell': true,
+                             'cell--alive': gridElement.isAlive,
+                             'cell--dead': !gridElement.isAlive}"
+                 [ngStyle]="{'width': cellHeightWidth(),
+                             'height': cellHeightWidth()}"></div>
         </td>
     </tr>
 </table>
