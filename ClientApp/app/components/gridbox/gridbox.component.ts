@@ -30,14 +30,11 @@ export class GridBoxComponent {
     start(): void {
         if(! this.isRunning()) {
             this.setIntervalNumber = setInterval(() => this.runGeneration(), this.generationDuration);
-        
-            console.log("Starting time " + this.setIntervalNumber);
         }
     }
 
     stop(): void {
         if(this.isRunning()) {
-            console.log("stopping time");
             clearInterval(this.setIntervalNumber);
             this.setIntervalNumber = -1;
         }
@@ -45,6 +42,5 @@ export class GridBoxComponent {
 
     runGeneration(): void {
         this.gridBox.goNext();
-        console.log("Generation ran :)");
     }
 }
