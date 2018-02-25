@@ -7,37 +7,24 @@ import { GridBox } from './gridbox';
     styleUrls: ['./gridbox.component.css']
 })
 export class GridBoxComponent {
-    private _width: number;
-    private _height: number;
     private gridBox: GridBox;
 
-    private generationDuration: number = 1000;
-    private setIntervalNumber: number = -1;
+    private generationDuration: number;
+    private setIntervalNumber: number;
 
     constructor() {
-        this._height = 0;
-        this._width = 0;
-        this.initGridBox();
-    }
+        this.initGridBox(15, 20);
 
-    @Input()
-    set width(w: number) {
-        this._width = w;
-        this.initGridBox();
-    }
-    
-    @Input()
-    set height(h: number) {
-        this._height = h;
-        this.initGridBox();
+        this.generationDuration = 1000;
+        this.setIntervalNumber = -1;
     }
 
     isRunning(): boolean {
         return this.setIntervalNumber >= 0;
     }
 
-    initGridBox(): void {
-        this.gridBox = new GridBox(this._height, this._width);
+    initGridBox(height: number, width: number): void {
+        this.gridBox = new GridBox(height, width);
     }
 
     start(): void {
@@ -57,6 +44,7 @@ export class GridBoxComponent {
     }
 
     runGeneration(): void {
+        this.gridBox.goNext();
         console.log("Generation ran :)");
     }
 }
