@@ -48,9 +48,10 @@ export class GridBoxComponent {
     }
 
     cellHeightWidth(): string {
-        if ((this.gridBox.height() < 18) && (this.gridBox.width() < 40)) {
+        // TODO: could be adjusted for different screens
+        if ((this.gridBox.height() < 25) && (this.gridBox.width() < 40)) {
             return '20px';
-        } else if ((this.gridBox.height() > 32) || (this.gridBox.width() > 60)) {
+        } else if ((this.gridBox.height() > 50) || (this.gridBox.width() > 80)) {
             return '5px';
         } else {
             return '10px';
