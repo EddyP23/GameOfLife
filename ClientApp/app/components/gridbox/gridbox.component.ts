@@ -32,7 +32,7 @@ export class GridBoxComponent {
 
     start(): void {
         if(! this.isRunning()) {
-            this.setIntervalNumber = setInterval(() => this.runGeneration(), this.generationDuration);
+            this.setIntervalNumber = setInterval(() => this.moveToNextGeneration(), this.generationDuration);
         }
     }
 
@@ -43,8 +43,8 @@ export class GridBoxComponent {
         }
     }
 
-    runGeneration(): void {
-        this.gridBox.goNext();
+    moveToNextGeneration(): void {
+        this.gridBox.moveToNextGeneration();
     }
 
     cellHeightWidth(): string {

@@ -7,24 +7,20 @@ export class GridBox {
         this.elements = this.generateDeadElements(height, width);
     }
 
-    goNext() {
-        this.elements = this.moveToNextGeneration();
-        this.increaseBoundaries();
+    moveToNextGeneration() {
+        this.elements = this.generateNextGeneration();
+        this.increaseBoundariesIfNeeded();
     }
 
-    private generateDeadElements(height: number, width: number): GridItem[][] {
-        let gridItems: GridItem[][] = [];
-        for (let h = 0; h < height; h++) {
-            gridItems[h] = [];
-            for (let w = 0; w < width; w++) {
-                gridItems[h][w] = new GridItem();
-            }
-        }
-
-        return gridItems;
+    height(): number {
+        return this.elements.length;
     }
 
-    private moveToNextGeneration(): GridItem[][] {
+    width(): number {
+        return this.elements[0].length;
+    }
+
+    private generateNextGeneration(): GridItem[][] {
         let newElements = this.generateDeadElements(this.height(), this.width());
 
         for (let h = 0; h < this.height(); h++) {
@@ -42,42 +38,13 @@ export class GridBox {
         return newElements;
     }
 
-    private increaseBoundaries() {
-        // top row
-        if (this.elements[0].some(this.isAlive)) {
-            this.elements.unshift(Array(this.width()).fill(() => new GridItem()));
-        }
-
-        // bottom row
-        if (this.elements[this.height() - 1].some(this.isAlive)) {
-            this.elements.push(Array(this.width()).fill(() => new GridItem()));
-        }
-
-        // left side
-        let zeroToHeigh = Array.from(Array(this.height()).keys())
-        if (zeroToHeigh.map(i => this.elements[i][0]).some(this.isAlive)) {
-            this.elements.forEach(row => row.unshift(new GridItem()));
-        }
-
-        // right side
-        zeroToHeigh = Array.from(Array(this.height()).keys())
-        if (zeroToHeigh.map(i => this.elements[i][this.width() - 1]).some(this.isAlive)) {
-            this.elements.forEach(row => row.push(new GridItem()));
-        }
-    }
-
-    private isAlive(item: GridItem) {
-        return item.isAlive
-    }
-
     private countAliveNeighbours(h: number, w: number): number {
         let aliveNeighbours = 0
                 
         for(let i = h - 1; i <= h + 1; i++) {
             for(let j = w - 1; j <= w + 1; j++) {
                 if((i !== h) || (j !== w)) { // Ignore element itself
-                    try {
-                        // Certain neighbours might not exist
+                    try { // Certain neighbours might not exist at the edges
                         if(this.elements[i][j].isAlive) {
                             aliveNeighbours++;
                         }
@@ -91,11 +58,39 @@ export class GridBox {
         return aliveNeighbours;
     }
 
-    height(): number {
-        return this.elements.length;
+    private increaseBoundariesIfNeeded() {
+        // top row
+        if (this.isAnyAlive(this.elements[0])) {
+            let gridItems = this.generateGridItemsLength(this.width());
+            this.elements.unshift(gridItems);
+        }
+
+        // bottom row
+        if (this.isAnyAlive(this.elements[this.height() - 1])) {
+            let gridItems = this.generateGridItemsLength(this.width());
+            this.elements.push(gridItems);
+        }
+
+        // left side
+        if (this.isAnyAlive(this.elements.map(row => row[0]))) {
+            this.elements.forEach(row => row.unshift(new GridItem()));
+        }
+
+        // right side
+        if (this.isAnyAlive(this.elements.map(row => row[this.width() - 1]))) {        
+            this.elements.forEach(row => row.push(new GridItem()));
+        }
     }
 
-    width(): number {
-        return this.elements[0].length;
+    private isAnyAlive(items: GridItem[]): boolean {
+        return items.some(item => item.isAlive);
+    }
+
+    private generateDeadElements(height: number, width: number): GridItem[][] {
+        return Array(height).fill(undefined).map(() => this.generateGridItemsLength(width));
+    }
+
+    private generateGridItemsLength(l: number): GridItem[] {
+        return Array(l).fill(undefined).map(() => new GridItem());
     }
 }

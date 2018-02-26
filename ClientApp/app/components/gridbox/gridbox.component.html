@@ -2,7 +2,7 @@
 <button
     (click)="start()"
     [ngClass]="{'button--start': true, 'button--disabled': isRunning()}">
-    {{isRunning() ? 'running...' : 'Start'}}</button>
+    {{ isRunning() ? 'running...' : 'Start' }}</button>
 <button
     (click)="stop()"
     [ngClass]="{'button--stop': true, 'button--disabled': !isRunning()}">Stop</button>
