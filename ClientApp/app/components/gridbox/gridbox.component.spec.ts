@@ -121,7 +121,7 @@ describe('Counter component', () => {
         stopRun();
     }));
 
-    fit('should increase grid when needed', fakeAsync(() => {
+    it('should increase grid when needed', fakeAsync(() => {
         //xxxxx
         //xoxxx
         //xoxxx
