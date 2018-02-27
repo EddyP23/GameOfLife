@@ -15,7 +15,7 @@ export class GridBoxComponentMock {
 
 let fixture: ComponentFixture<AppComponent>;
 
-describe('Counter component', () => {
+describe('App component', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({ declarations: [AppComponent, GridBoxComponentMock] });
         fixture = TestBed.createComponent(AppComponent);

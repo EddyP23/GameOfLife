@@ -1,11 +1,12 @@
 <p>Set generation duration: <input [(ngModel)]="generationDuration">ms.</p>
 <button
     (click)="start()"
-    [ngClass]="{'button--start': true, 'button--disabled': isRunning()}">
-    {{ isRunning() ? 'running...' : 'Start' }}</button>
+    [ngClass]="{'button--start': true, 'button--disabled': isRunning()}"
+    >{{ isRunning() ? 'running...' : 'Start' }}</button>
 <button
     (click)="stop()"
-    [ngClass]="{'button--stop': true, 'button--disabled': !isRunning()}">Stop</button>
+    [ngClass]="{'button--stop': true, 'button--disabled': !isRunning()}"
+    >Stop</button>
 
 <button 
     (click)="stop(); initGridBox()"
